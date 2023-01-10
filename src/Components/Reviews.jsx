@@ -7,12 +7,13 @@ const Reviews = () => {
     const [isLoading, setIsLoading] = useState(true)
 
     useEffect(()=>{
+        setIsLoading(true)
         getReviews()
         .then((reviews)=>{
             setReviews(reviews)
             setIsLoading(false)
         })
-    }, [reviewList])
+    }, [])
 
     if(isLoading) {
         return <p className="Loading">Loading...</p>
