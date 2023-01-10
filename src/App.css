@@ -65,3 +65,8 @@ button {
   font-size: 16px;
   margin: 8px;
 }
+
+.Loading {
+  background-color: #BFD4D8;
+  font-size: 20px;
+}
