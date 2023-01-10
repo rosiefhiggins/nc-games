@@ -4,14 +4,16 @@ import { getCommentsByReviewId } from "../api"
 const Comments = (id) => {
     const [commentsList, setComments] = useState([])
     const [isLoading, setIsLoading] = useState(true)
+    
 
     useEffect(()=>{
+        setIsLoading(true)
         getCommentsByReviewId(id.review_id)
         .then((comments)=>{
             setComments(comments)
             setIsLoading(false)
         })
-    }, [commentsList])
+    }, [])
 
     if(isLoading){
         return <p className="Loading">Loading comments... </p>

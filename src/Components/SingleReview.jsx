@@ -10,6 +10,7 @@ const SingleReview = () => {
 
 
     useEffect(()=>{
+        setIsLoading(true)
         getReviewById(review_id)
         .then((review)=>{
             setReviewBody(review)
