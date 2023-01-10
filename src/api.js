@@ -1,4 +1,5 @@
 import axios from "axios";
+import { useState } from "react";
 
 const gamesApi=axios.create({
     baseURL: "https://rosie-nc-games.onrender.com"
@@ -19,5 +20,11 @@ export const getReviewById = (review_id) => {
 export const getCommentsByReviewId  = (review_id) => {
     return gamesApi.get(`/api/reviews/${review_id}/comments`).then((res)=>{
         return res.data.review_comments
+    })
+}
+
+export const patchVotesById = (review_id, increment) => {
+    return gamesApi.patch(`/api/reviews/${review_id}`, {inc_votes: increment}).then((res)=>{
+        console.log(res.data)
     })
 }
