@@ -6,14 +6,20 @@ import Comments from "./Comments"
 const SingleReview = () => {
     const [reviewBody, setReviewBody] = useState([])
     const { review_id }= useParams()
+    const [isLoading, setIsLoading] = useState(true)
 
 
     useEffect(()=>{
         getReviewById(review_id)
         .then((review)=>{
             setReviewBody(review)
+            setIsLoading(false)
         })
     }, [review_id])
+
+    if(isLoading){
+        return <p className="Loading">Loading review... </p>
+    }
 
     return (
         <div className="singleReview">
@@ -31,3 +37,4 @@ const SingleReview = () => {
 }
 
 export default SingleReview
+
