@@ -1,5 +1,6 @@
 .App {
   text-align: center;
+  background-color: #80A9B1;
 }
 
 .App-logo {
@@ -35,4 +36,43 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+ol {
+  list-style-type: none;
+  padding: 0px;
+  margin: 0px;
+}
+
+img {
+  width:  200px;
+  height: 200px;
+}
+
+.review {
+  border: solid navy;
+  background-color: #BFD4D8;
+  margin: 16px;
+}
+
+div.reviews {
+    display: inline-flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+button {
+  font-size: 16px;
+  margin: 8px;
+}
+
+.Loading {
+  background-color: #BFD4D8;
+  font-size: 20px;
+}
+
+.singleReview {
+  border: solid navy;
+  background-color: #BFD4D8;
+  margin: 16px;
 }
