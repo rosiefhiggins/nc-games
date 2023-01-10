@@ -70,3 +70,9 @@ button {
   background-color: #BFD4D8;
   font-size: 20px;
 }
+
+.singleReview {
+  border: solid navy;
+  background-color: #BFD4D8;
+  margin: 16px;
+}

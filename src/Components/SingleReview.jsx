@@ -1,24 +1,27 @@
 import { useState, useEffect } from "react"
 import { getReviewById } from "../api"
+import { useParams } from "react-router-dom"
 
 
-const SingleReview = (id) => {
+const SingleReview = () => {
     const [reviewBody, setReviewBody] = useState([])
+    const { review_id }= useParams()
 
-    
+
     useEffect(()=>{
-        getReviewById(id.review_id)
+        getReviewById(review_id)
         .then((review)=>{
             setReviewBody(review)
         })
-    }, [])
-    
+    }, [review_id])
+
     return (
-        <div>
+        <div className="singleReview">
             <h3> {reviewBody.title}</h3>
             <p> {reviewBody.review_body}</p>
             <p> Written by : {reviewBody.owner} </p>
             <p> Date: {reviewBody.created_at} </p>
+            <p> Votes: {reviewBody.votes}</p>
         </div>
     )
 }

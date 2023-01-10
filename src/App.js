@@ -1,13 +1,23 @@
 import './App.css';
 import Header from './Components/Header'
 import Reviews from './Components/Reviews'
+import Navigation from './Components/Navigation';
+import SingleReview from './Components/SingleReview';
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
+
 
 function App() {
   return (
+    <BrowserRouter>
     <div className="App">
       <Header/>
-      <Reviews/>
+      <Navigation/>
+      <Routes>
+        <Route path="/api/reviews" element={<Reviews/>}/>
+        <Route path="/api/reviews/:review_id" element={<SingleReview />}/>
+      </Routes>
     </div>
+    </BrowserRouter>
   );
 }
 
