@@ -21,3 +21,11 @@ export const getCommentsByReviewId  = (review_id) => {
         return res.data.review_comments
     })
 }
+
+
+export const postComment = (review_id, comment) => {
+    return gamesApi.post(`/api/reviews/${review_id}/comments`, {username: 'Mallionaire', body: comment}).then((res)=>{
+        console.log(res.data)
+        return res.data
+    })
+}
