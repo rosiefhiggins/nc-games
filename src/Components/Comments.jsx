@@ -24,6 +24,7 @@ const Comments = (id) => {
         return (
             <div>
                 <h3> All Comments </h3>
+                <CommentAdder commentsList={commentsList}/>
                 <div className="comments">
                 <ol>
                     {commentsList.map((comment)=>{
@@ -50,6 +51,7 @@ const Comments = (id) => {
                 <div className="sadface">
                     <p>😢</p>
                 </div>
+                <CommentAdder commentsList={commentsList}/>
             </div>
         )
     }
