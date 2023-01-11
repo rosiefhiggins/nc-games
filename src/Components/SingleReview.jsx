@@ -2,12 +2,13 @@ import { useState, useEffect } from "react"
 import { getReviewById } from "../api"
 import { useParams } from "react-router-dom"
 import Comments from "./Comments"
+import Votes from "./Votes"
 
 const SingleReview = () => {
     const [reviewBody, setReviewBody] = useState([])
     const { review_id }= useParams()
     const [isLoading, setIsLoading] = useState(true)
-
+    const [err, setIsError] = useState(null)
 
     useEffect(()=>{
         setIsLoading(true)
@@ -16,10 +17,22 @@ const SingleReview = () => {
             setReviewBody(review)
             setIsLoading(false)
         })
+        .catch((err)=>{
+            setIsError(true)
+            setIsLoading(false)
+        })
     }, [review_id])
 
     if(isLoading){
         return <p className="Loading">Loading review... </p>
+    }
+
+    if(err){
+        return (
+            <main>
+                <p>Review ID does not exist!</p>
+            </main>
+        )
     }
 
     return (
@@ -29,7 +42,7 @@ const SingleReview = () => {
             <div className="info">
             <p> Written by : {reviewBody.owner} </p>
             <p> Date: {reviewBody.created_at} </p>
-            <p> Votes: {reviewBody.votes}</p>
+            <Votes votes={reviewBody.votes} review_id={reviewBody.review_id} /> 
             </div>
             <br></br>
             <Comments review_id={review_id}/>
