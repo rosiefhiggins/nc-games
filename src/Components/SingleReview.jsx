@@ -18,8 +18,7 @@ const SingleReview = () => {
             setIsLoading(false)
         })
         .catch((err)=>{
-            console.log(err);
-            setIsError(err.response.data.msg)
+            setIsError(true)
             setIsLoading(false)
         })
     }, [review_id])
@@ -31,7 +30,7 @@ const SingleReview = () => {
     if(err){
         return (
             <main>
-                <p>{err}</p>
+                <p>Review ID does not exist!</p>
             </main>
         )
     }

@@ -11,7 +11,7 @@ const Votes = ({votes, review_id}) => {
         patchVotesById(review_id, increment)
         .catch((err)=>{
             setVoteChange((currVoteChange)=> currVoteChange - increment)
-            setError(err.response.data.msg)
+            setError(true)
         })
     }
     
@@ -21,7 +21,7 @@ const Votes = ({votes, review_id}) => {
             <p> Votes: {votes + voteChange}</p>
             <button onClick={()=>incVote(1)}>👍</button>
             <button onClick={()=>incVote(-1)}>👎</button>
-            {err? <main><p>{err}</p></main>: null}
+            {err? <main><p>Unable to perform action</p></main>: null}
         </section>
     )
 }
