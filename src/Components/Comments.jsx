@@ -26,7 +26,7 @@ const Comments = ({review_id}) => {
             <div>
                 <h3> All Comments </h3>
                 <div className="comments">
-                <CommentAdder commentsList={commentsList} review_id={review_id}/>
+                <CommentAdder setComments={setComments} review_id={review_id}/>
                 <ol>
                     {commentsList.map((comment)=>{
                         return (
@@ -52,7 +52,7 @@ const Comments = ({review_id}) => {
                 <div className="sadface">
                     <p>😢</p>
                 </div>
-                <CommentAdder commentsList={commentsList} review_id={review_id}/>
+                <CommentAdder setComments={setComments} review_id={review_id}/>
             </div>
         )
     }

@@ -2,24 +2,39 @@ import { postComment } from "../api";
 import { useState } from "react";
 
 
-const CommentAdder = ({commentsList, review_id}) => {
+const CommentAdder = ({setComments, review_id}) => {
     const [newComment, setNewComment] = useState("")
-    
+    const [err, setError]=useState(null)
+
     const handleSubmit = (e) => {
         e.preventDefault()
-        postComment(review_id, newComment).then((newComment)=>{
-            commentsList((currComments)=>{
-                return [newComment, ...currComments]
-            })
+        const comment = {
+            "comment_id": Date.now(),
+            "body": newComment,
+            "review_id": review_id,
+            "author": "weegembump",
+            "votes": 0,
+            "created_at": "Just now",
+        }
+        setComments((currComments)=>{
+            return [comment, ...currComments]
         })
+        postComment(review_id, newComment).then(()=>{
+            setNewComment("")
+        })
+        .catch((err)=>{
+            setError(true)
+        })
+    }
+
+    if (err) {
+        return <main><p>Error uploading comment!</p></main>
     }
     
 
     return (
-        <form classsName="CommentAdder" onSubmit={handleSubmit}>
-            <label htmlFor="newComment">Add a comment</label>
-        <textarea id="new-comment" value={newComment} 
-        onChange={(e)=> setNewComment(e.target.value)} />
+        <form  onSubmit={handleSubmit}>
+        <textarea id="new-comment" value={newComment} onChange={(e)=> setNewComment(e.target.value)} />
         <button>Add Comment</button> 
         </form>
     )
