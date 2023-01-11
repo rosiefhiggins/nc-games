@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
 import { getCommentsByReviewId } from "../api"
+import CommentAdder from "./CommentAdder"
 
 const Comments = ({review_id}) => {
     const [commentsList, setComments] = useState([])
@@ -25,6 +26,7 @@ const Comments = ({review_id}) => {
             <div>
                 <h3> All Comments </h3>
                 <div className="comments">
+                <CommentAdder commentsList={commentsList} review_id={review_id}/>
                 <ol>
                     {commentsList.map((comment)=>{
                         return (
@@ -50,6 +52,7 @@ const Comments = ({review_id}) => {
                 <div className="sadface">
                     <p>😢</p>
                 </div>
+                <CommentAdder commentsList={commentsList} review_id={review_id}/>
             </div>
         )
     }
