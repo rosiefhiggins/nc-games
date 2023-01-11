@@ -8,7 +8,7 @@ const SingleReview = () => {
     const [reviewBody, setReviewBody] = useState([])
     const { review_id }= useParams()
     const [isLoading, setIsLoading] = useState(true)
-
+    const [err, setIsError] = useState(null)
 
     useEffect(()=>{
         setIsLoading(true)
@@ -17,10 +17,23 @@ const SingleReview = () => {
             setReviewBody(review)
             setIsLoading(false)
         })
+        .catch((err)=>{
+            console.log(err);
+            setIsError(err.response.data.msg)
+            setIsLoading(false)
+        })
     }, [review_id])
 
     if(isLoading){
         return <p className="Loading">Loading review... </p>
+    }
+
+    if(err){
+        return (
+            <main>
+                <p>{err}</p>
+            </main>
+        )
     }
 
     return (
@@ -30,7 +43,7 @@ const SingleReview = () => {
             <div className="info">
             <p> Written by : {reviewBody.owner} </p>
             <p> Date: {reviewBody.created_at} </p>
-            <Votes votes={reviewBody.votes} review_id={reviewBody.review_id}/> 
+            <Votes votes={reviewBody.votes} review_id={reviewBody.review_id} /> 
             </div>
             <br></br>
             <Comments review_id={review_id}/>

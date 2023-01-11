@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react"
 import { getCommentsByReviewId } from "../api"
 
-const Comments = (id) => {
+const Comments = ({review_id}) => {
     const [commentsList, setComments] = useState([])
     const [isLoading, setIsLoading] = useState(true)
 
     useEffect(()=>{
         setIsLoading(true)
-        getCommentsByReviewId(id.review_id)
+        getCommentsByReviewId(review_id)
         .then((comments)=>{
             setComments(comments)
             setIsLoading(false)
@@ -17,6 +17,8 @@ const Comments = (id) => {
     if(isLoading){
         return <p className="Loading">Loading comments... </p>
     }
+
+    
 
     if(commentsList.length!==0){
         return (
