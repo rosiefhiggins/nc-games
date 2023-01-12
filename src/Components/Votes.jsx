@@ -15,7 +15,6 @@ const Votes = ({votes, review_id}) => {
         })
     }
     
-
     return (
         <section>
             <p> Votes: {votes + voteChange}</p>

@@ -8,7 +8,8 @@ const CommentAdder = ({setComments, review_id}) => {
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        const comment = {
+        if(newComment.length!==0){
+            const comment = {
             "comment_id": Date.now(),
             "body": newComment,
             "review_id": review_id,
@@ -23,8 +24,12 @@ const CommentAdder = ({setComments, review_id}) => {
             setNewComment("")
         })
         .catch((err)=>{
+            setComments((currComments)=>{
+                return currComments.slice(1)
+            })
             setError(true)
         })
+        }
     }
 
     if (err) {
