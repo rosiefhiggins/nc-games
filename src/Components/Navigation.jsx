@@ -1,24 +1,26 @@
 import { Link } from "react-router-dom"
+import { useState, useEffect } from "react"
+import { getCategories } from "../api"
+
 
 const Navigation = () => {
+    const [categoryList, setCategoryList] = useState([])
+
+    useEffect(()=>{
+        getCategories()
+        .then((categories)=>{
+            setCategoryList(categories)
+        })
+    }, [])
+
     return (
         <nav>
-            <Link to="/api/reviews">All Reviews</Link>
-            <span> | </span>
-            <Link to="/api/reviews?category=deck-building">Deck Building</Link>
-            <span> | </span>
-            <Link to="/api/reviews?category=dexterity">Dexterity</Link>
-            <span> | </span>
-            <Link to="/api/reviews?category=engine-building">Engine Building</Link>
-            <span> | </span>
-            <Link to="/api/reviews?category=hidden-roles">Hidden Roles</Link>
-            <span> | </span>
-            <Link to="/api/reviews?category=push-your-luck">Push Your Luck</Link>
-            <span> | </span>
-            <Link to="/api/reviews?category=roll-and-write">Roll and Write</Link>
-            <span> | </span>
-            <Link to="/api/reviews?category=strategy">Strategy</Link>
-
+            <Link to="/api/reviews"> All </Link>
+            {categoryList.map((category)=>{
+                return (
+                    <Link to={`/api/reviews?category=${category.slug}`}> |  {category.slug}  </Link>
+                )
+            })}
         </nav>
     )
 }
