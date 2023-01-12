@@ -5,12 +5,26 @@ const gamesApi=axios.create({
     baseURL: "https://rosie-nc-games.onrender.com"
 });
 
-export const getReviews = (categoryQuery) => {
+export const getReviews = (categoryQuery, sortBy, order) => {
     return gamesApi.get("/api/reviews").then((res)=>{
+        const reviewArr=[...res.data.reviews]
+        const sortByFunction=(reviewA,reviewB) => {
+            if(reviewA[sortBy]<reviewB[sortBy]){
+                return 1
+            }else if(reviewA[sortBy]>reviewB[sortBy]){
+                return -1
+            }else{
+                return 0
+            }
+        }
+        reviewArr.sort(sortByFunction)
+        if(order==='asc'){
+            reviewArr.reverse()
+        }
         if(categoryQuery===null){
-            return res.data.reviews
+            return reviewArr
         } else{
-            return res.data.reviews.filter(review => review.category===categoryQuery)
+            return reviewArr.filter(review => review.category===categoryQuery)
         }
     })
 }
