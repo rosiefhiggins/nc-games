@@ -1,19 +1,22 @@
-import { getReviews } from "../api"
+import { getReviews} from "../api"
 import { useEffect, useState } from 'react'
-import { Link } from "react-router-dom"
+import { Link, useSearchParams } from "react-router-dom"
+
 
 const Reviews = () => {
     const [reviewList, setReviews] = useState([])
     const [isLoading, setIsLoading] = useState(true)
+    const [searchParams, setSearchParams] = useSearchParams()
+    const categoryQuery= searchParams.get('category')
 
     useEffect(()=>{
         setIsLoading(true)
-        getReviews()
+        getReviews(categoryQuery)
         .then((reviews)=>{
             setReviews(reviews)
             setIsLoading(false)
-        })
-    }, [])
+            })
+    }, [categoryQuery])
 
     if(isLoading) {
         return <p className="Loading">Loading...</p>
@@ -21,7 +24,7 @@ const Reviews = () => {
 
     return (
         <div>
-            <h2> All Reviews </h2>
+            <h2> All {categoryQuery} reviews </h2>
             <div className="reviews">
             <ol>
                 {reviewList.map((review)=>{

@@ -5,9 +5,13 @@ const gamesApi=axios.create({
     baseURL: "https://rosie-nc-games.onrender.com"
 });
 
-export const getReviews = () => {
+export const getReviews = (categoryQuery) => {
     return gamesApi.get("/api/reviews").then((res)=>{
-        return res.data.reviews
+        if(categoryQuery===null){
+            return res.data.reviews
+        } else{
+            return res.data.reviews.filter(review => review.category===categoryQuery)
+        }
     })
 }
 
@@ -32,6 +36,12 @@ export const patchVotesById = (review_id, increment) => {
 export const postComment = (review_id, comment) => {
     return gamesApi.post(`/api/reviews/${review_id}/comments`, {username: 'weegembump', body: comment}).then((res)=>{
         return res.data.review_comments
+    })
+}
+
+export const getCategories = () => {
+    return gamesApi.get("/api/categories").then((res)=>{
+        return res.data.categories
     })
 }
 
