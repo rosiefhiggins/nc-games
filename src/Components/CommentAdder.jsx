@@ -39,7 +39,7 @@ const CommentAdder = ({setComments, review_id}) => {
 
     return (
         <form  onSubmit={handleSubmit}>
-        <textarea id="new-comment" value={newComment} onChange={(e)=> setNewComment(e.target.value)} />
+        <textarea id="new-comment" value={newComment} onChange={(e)=> setNewComment(e.target.value)}  required/>
         <button>Add Comment</button> 
         </form>
     )
