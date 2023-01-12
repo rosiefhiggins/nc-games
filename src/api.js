@@ -35,4 +35,10 @@ export const postComment = (review_id, comment) => {
     })
 }
 
+export const getReviewsByCategory = (sortByQuery) => {
+    return gamesApi.get("/api/reviews").then((res)=>{
+        const reviews= res.data.reviews
+        return reviews.filter(review=>review.category===sortByQuery)
+    })
+}
 
