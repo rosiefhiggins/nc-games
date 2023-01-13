@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react"
-import { getCommentsByReviewId } from "../api"
+import { getCommentsByReviewId, deleteCommentById } from "../api"
 import CommentAdder from "./CommentAdder"
 
 const Comments = ({review_id}) => {
     const [commentsList, setComments] = useState([])
     const [isLoading, setIsLoading] = useState(true)
-
+    const [err, setError]=useState(null)
+    const [commentId, setCommentId]=useState(null)
+    
     useEffect(()=>{
         setIsLoading(true)
         getCommentsByReviewId(review_id)
@@ -13,12 +15,32 @@ const Comments = ({review_id}) => {
             setComments(comments)
             setIsLoading(false)
         })
-    }, [])
+    }, [review_id])
 
     if(isLoading){
         return <p className="Loading">Loading comments... </p>
     }
-
+    const deleteComment = (comment) => {
+        setCommentId(comment.comment_id)
+        const commentObj={...comment}
+        const commentsArr=[...commentsList]
+        for(let i=0; i<commentsArr.length; i++){
+            if(commentsArr[i].comment_id===comment.comment_id){
+                commentsArr[i].body="Deleted"
+            }
+        }
+        setComments(commentsArr)
+        deleteCommentById(comment.comment_id)
+        .catch((err)=>{
+            for(let i=0; i<commentsArr.length; i++){
+                if(commentsArr[i].comment_id===commentObj.comment_id){
+                    commentsArr[i].body=commentObj.body
+                }
+            }
+            setComments(commentsArr)
+            setError(err)
+        })
+    }
     
 
     if(commentsList.length!==0){
@@ -37,6 +59,8 @@ const Comments = ({review_id}) => {
                                 <p> Date: {comment.created_at}</p>
                                 <p> Votes: {comment.votes}</p>
                                 </div>
+                                {comment.author==="weegembump" ? <button onClick={()=> deleteComment(comment)}> Delete Comment </button>: <p></p>}
+                                {err && comment.comment_id===commentId? <p> Unable to delete comment!</p> : <p></p>}
                             </li>
                         )
 

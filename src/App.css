@@ -45,8 +45,8 @@ ol {
 }
 
 img {
-  width:  200px;
-  height: 200px;
+  width:  35vw;
+  height: 35vh;
 }
 
 .review {
@@ -54,7 +54,7 @@ img {
   background-color: #BFD4D8;
   margin: 16px;
   padding:10px;
-  width: 400px;
+  width: 40vw;;
 }
 
 div.reviews {
@@ -98,4 +98,9 @@ button {
 
 .sadface{
   font-size: 70px;
+}
+
+.homeImg{
+  height: 50%;
+  width: 50%;
 }

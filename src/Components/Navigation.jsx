@@ -15,10 +15,11 @@ const Navigation = () => {
 
     return (
         <nav>
-            <Link to="/api/reviews"> All </Link>
+            <Link to="/"> Home </Link>
+            <Link to="/api/reviews">|  All </Link>
             {categoryList.map((category)=>{
                 return (
-                    <Link to={`/api/reviews?category=${category.slug}`}> |  {category.slug}  </Link>
+                    <Link to={`/api/reviews?category=${category.slug}`} key={category.slug}> |  {category.slug}  </Link>
                 )
             })}
         </nav>

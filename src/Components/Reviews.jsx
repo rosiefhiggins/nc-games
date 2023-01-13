@@ -41,9 +41,9 @@ const Reviews = () => {
     return (
         <div>
             <h2> All {categoryQuery} reviews </h2>
-            <section value={sortBy} onChange={(e)=>setSortByOrder(e.target.value)}>
+            <section>
                 <p>Sort By:</p>
-                <select value={sortBy}>
+                <select value={sortBy} onChange={(e)=>setSortByOrder(e.target.value)}>
                     <option value="created_at">Date</option>
                     <option value="comment_count">Comment Count</option>   
                     <option value="votes">Votes</option>
