@@ -14,32 +14,30 @@ const Comments = ({review_id}) => {
             setComments(comments)
             setIsLoading(false)
         })
-    }, [])
+    }, [review_id])
 
     if(isLoading){
         return <p className="Loading">Loading comments... </p>
     }
     const deleteComment = (comment) => {
         const firstComment=commentsList[0]
-        if(comment.author==="weegembump"){
-            const opRenderComm = {
-                "comment_id": comment.comment_id,
-                "body": "Deleted",
-                "author": "weegembump",
-                "created_at": "Just Now",
-                "votes": comment.votes
-            }
-            setComments((currComments)=>{
-                return [opRenderComm, ...currComments.slice(1)]
-            })
-            deleteCommentById(comment.comment_id)
-            .catch((err)=>{
-                setComments((currComments)=>{
-                    return [firstComment, ...currComments.slice(1)]
-                })
-                setError(err)
-            })
+        const opRenderComm = {
+            "comment_id": comment.comment_id,
+            "body": "Deleted",
+            "author": "weegembump",
+            "created_at": "Just Now",
+            "votes": comment.votes
         }
+        setComments((currComments)=>{
+            return [opRenderComm, ...currComments.slice(1)]
+        })
+        deleteCommentById(comment.comment_id)
+        .catch((err)=>{
+            setComments((currComments)=>{
+                return [firstComment, ...currComments.slice(1)]
+            })
+            setError(err)
+        })
     }
     
 
@@ -59,8 +57,8 @@ const Comments = ({review_id}) => {
                                 <p> Date: {comment.created_at}</p>
                                 <p> Votes: {comment.votes}</p>
                                 </div>
-                                <button onClick={()=> deleteComment(comment)}> Delete Comment </button>
-                                
+                                {comment.author==="weegembump" ? <button onClick={()=> deleteComment(comment)}> Delete Comment </button> : <p></p>}
+                                {err ? <p>Unable to delete comment!</p> : <p></p>}
                             </li>
                         )
 
