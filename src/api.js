@@ -5,13 +5,12 @@ const gamesApi=axios.create({
     baseURL: "https://rosie-nc-games.onrender.com"
 });
 
-export const getReviews = (categoryQuery) => {
-    return gamesApi.get("/api/reviews").then((res)=>{
-        if(categoryQuery===null){
-            return res.data.reviews
-        } else{
-            return res.data.reviews.filter(review => review.category===categoryQuery)
-        }
+
+export const getReviews= (categoryQuery, sortBy, order) => {
+    console.log(sortBy)
+    return gamesApi.get("/api/reviews", {params: {category: categoryQuery, sort_by: sortBy, order: order}})
+    .then((res)=>{
+        return res.data.reviews
     })
 }
 
