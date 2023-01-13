@@ -7,7 +7,6 @@ const gamesApi=axios.create({
 
 
 export const getReviews= (categoryQuery, sortBy, order) => {
-    console.log(sortBy)
     return gamesApi.get("/api/reviews", {params: {category: categoryQuery, sort_by: sortBy, order: order}})
     .then((res)=>{
         return res.data.reviews
@@ -45,3 +44,8 @@ export const getCategories = () => {
 }
 
 
+export const deleteCommentById = (comment_id) => {
+    return gamesApi.delete(`/api/comments/${comment_id}`).then((res)=>{
+        console.log("deleted comment")
+    })
+}

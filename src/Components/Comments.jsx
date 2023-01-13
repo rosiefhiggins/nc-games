@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react"
-import { getCommentsByReviewId } from "../api"
+import { getCommentsByReviewId, deleteCommentById } from "../api"
 import CommentAdder from "./CommentAdder"
 
 const Comments = ({review_id}) => {
     const [commentsList, setComments] = useState([])
     const [isLoading, setIsLoading] = useState(true)
-
+    const [err, setError]=useState(null)
+    
     useEffect(()=>{
         setIsLoading(true)
         getCommentsByReviewId(review_id)
@@ -18,7 +19,28 @@ const Comments = ({review_id}) => {
     if(isLoading){
         return <p className="Loading">Loading comments... </p>
     }
-
+    const deleteComment = (comment) => {
+        const firstComment=commentsList[0]
+        if(comment.author==="weegembump"){
+            const opRenderComm = {
+                "comment_id": comment.comment_id,
+                "body": "Deleted",
+                "author": "weegembump",
+                "created_at": "Just Now",
+                "votes": comment.votes
+            }
+            setComments((currComments)=>{
+                return [opRenderComm, ...currComments.slice(1)]
+            })
+            deleteCommentById(comment.comment_id)
+            .catch((err)=>{
+                setComments((currComments)=>{
+                    return [firstComment, ...currComments.slice(1)]
+                })
+                setError(err)
+            })
+        }
+    }
     
 
     if(commentsList.length!==0){
@@ -37,6 +59,8 @@ const Comments = ({review_id}) => {
                                 <p> Date: {comment.created_at}</p>
                                 <p> Votes: {comment.votes}</p>
                                 </div>
+                                <button onClick={()=> deleteComment(comment)}> Delete Comment </button>
+                                
                             </li>
                         )
 

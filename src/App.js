@@ -4,7 +4,7 @@ import Reviews from './Components/Reviews'
 import Navigation from './Components/Navigation';
 import SingleReview from './Components/SingleReview';
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-
+import Home from './Components/Home'
 
 function App() {
   return (
@@ -13,6 +13,7 @@ function App() {
       <Header/>
       <Navigation/>
       <Routes>
+        <Route path="/" element={<Home/>}/>
         <Route path="/api/reviews" element={<Reviews/>}/>
         <Route path="/api/reviews/:review_id" element={<SingleReview />}/>
       </Routes>
