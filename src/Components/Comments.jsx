@@ -6,6 +6,7 @@ const Comments = ({review_id}) => {
     const [commentsList, setComments] = useState([])
     const [isLoading, setIsLoading] = useState(true)
     const [err, setError]=useState(null)
+    const [commentId, setCommentId]=useState(null)
     
     useEffect(()=>{
         setIsLoading(true)
@@ -20,22 +21,23 @@ const Comments = ({review_id}) => {
         return <p className="Loading">Loading comments... </p>
     }
     const deleteComment = (comment) => {
-        const firstComment=commentsList[0]
-        const opRenderComm = {
-            "comment_id": comment.comment_id,
-            "body": "Deleted",
-            "author": "weegembump",
-            "created_at": "Just Now",
-            "votes": comment.votes
+        setCommentId(comment.comment_id)
+        const commentObj={...comment}
+        const commentsArr=[...commentsList]
+        for(let i=0; i<commentsArr.length; i++){
+            if(commentsArr[i].comment_id===comment.comment_id){
+                commentsArr[i].body="Deleted"
+            }
         }
-        setComments((currComments)=>{
-            return [opRenderComm, ...currComments.slice(1)]
-        })
+        setComments(commentsArr)
         deleteCommentById(comment.comment_id)
         .catch((err)=>{
-            setComments((currComments)=>{
-                return [firstComment, ...currComments.slice(1)]
-            })
+            for(let i=0; i<commentsArr.length; i++){
+                if(commentsArr[i].comment_id===commentObj.comment_id){
+                    commentsArr[i].body=commentObj.body
+                }
+            }
+            setComments(commentsArr)
             setError(err)
         })
     }
@@ -57,8 +59,8 @@ const Comments = ({review_id}) => {
                                 <p> Date: {comment.created_at}</p>
                                 <p> Votes: {comment.votes}</p>
                                 </div>
-                                {comment.author==="weegembump" ? <button onClick={()=> deleteComment(comment)}> Delete Comment </button> : <p></p>}
-                                {err ? <p>Unable to delete comment!</p> : <p></p>}
+                                {comment.author==="weegembump" ? <button onClick={()=> deleteComment(comment)}> Delete Comment </button>: <p></p>}
+                                {err && comment.comment_id===commentId? <p> Unable to delete comment!</p> : <p></p>}
                             </li>
                         )
 
