@@ -10,14 +10,20 @@ const Reviews = () => {
     const [order, setOrder]=useState('desc')
     const [searchParams, setSearchParams] = useSearchParams()
     const categoryQuery= searchParams.get('category')
+    const [err, setError] = useState(null)
 
     useEffect(()=>{
+        setError(null)
         setIsLoading(true)
         getReviews(categoryQuery, sortBy, order)
         .then((reviews)=>{
             setReviews(reviews)
             setIsLoading(false)
             })
+        .catch((err)=>{
+            setIsLoading(false)
+            setError(err)
+        })
     }, [categoryQuery, sortBy, order])
 
     const setSortByOrder = (sort) => {
@@ -37,6 +43,11 @@ const Reviews = () => {
     if(isLoading) {
         return <p className="Loading">Loading...</p>
     }
+
+    if(err){
+        return(<main><p>Invalid query!</p></main>)
+    }
+
 
     return (
         <div>

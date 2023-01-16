@@ -5,7 +5,7 @@ import CommentAdder from "./CommentAdder"
 const Comments = ({review_id}) => {
     const [commentsList, setComments] = useState([])
     const [isLoading, setIsLoading] = useState(true)
-    const [err, setError]=useState(null)
+    const [err, setErr]=useState(null)
     const [commentId, setCommentId]=useState(null)
     
     useEffect(()=>{
@@ -38,9 +38,10 @@ const Comments = ({review_id}) => {
                 }
             }
             setComments(commentsArr)
-            setError(err)
+            setErr(err)
         })
     }
+
     
 
     if(commentsList.length!==0){
